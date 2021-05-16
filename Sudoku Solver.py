@@ -7,9 +7,9 @@ import random
 import numpy as np
 
 
-class Sudoku3x3:
+class Row:
     def __init__(self, cols):
-        self.sudoku3x3 = [cols[0], cols[1], cols[2], cols[3], cols[4], cols[5], cols[6], cols[7], cols[8]]
+        self.Row = [cols[0], cols[1], cols[2], cols[3], cols[4], cols[5], cols[6], cols[7], cols[8]]
     
     
 
@@ -25,9 +25,9 @@ class Sudoku9x9:
                            [0,0,0,0,0,0,1,0,0],
                            [0,0,0,0,0,0,0,1,0],
                            [0,0,0,0,0,0,0,0,1]])
-
-
-        #self.sudoku9x9 = [Sudoku3x3(), Sudoku3x3(), Sudoku3x3()
+        while True:
+            self.PrintGrid()
+            self.EnterValue()
 
         
 
@@ -46,20 +46,19 @@ class Sudoku9x9:
             if (y + 1) % 3 == 0 and y != 8:
                 rowString.append("-------------  -------------  -------------\n-------------  -------------  -------------\n| ")  
             else:
-                rowString.append("-------------  -------------  -------------\n| ")
+                rowString.append("-------------  -------------  -------------\n")
+                rowString.append("| ")
 
+        rowString.pop(len(rowString) - 1) #Just to remove the last '|'
         print("".join(rowString))
-        '''
-        for index in range(0, 3):
-            self.sudoku9x9[index].PrintSquare()
-        '''
-    #def getSudoku(self.sudoku9x9):
 
+    def EnterValue(self):
+        row, col, change = input("Enter the row nr, col nr and number you want to add: ").split()
+        self.allValues[int(row)][int(col)] = int(change)
 
-#Sudoku9x9.GetNegetNewGrid()
 
 grid = Sudoku9x9()
-grid.PrintGrid()
+
 
     
         
