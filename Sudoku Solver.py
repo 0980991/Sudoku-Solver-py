@@ -8,67 +8,51 @@ import numpy as np
 
 
 class Sudoku3x3:
-    def __init__(self, coordinate):
-        if coordinate == "a":
-
-        self.sudoku3x3 = [[1.1, 1.2, 1.3], [2.1, 2.2, 2.3], [3.1, 3.2, 3.3]]
-
-    def Row(self, colNr):
-        rowString = []
-        for index in range(0, 3):
-            
-            rowString.append(str(self.sudoku3x3[colNr][index]))
-            rowString.append(" | ")
-            if index == 2 and colNr != 2:
-                rowString.append(" | ")
-            
-        
-        return (''.join(rowString))
-    
-    def PrintSquare(self):
-        squareString = []
-        for index in range(0, 3):
-            squareString.append("-------------  -------------  -------------\n| ")
-            for rowNr in range(0, 3):
-                
-                squareString.append(self.Row(rowNr))
-            squareString.append("\n")
-        squareString.append("-------------  -------------  -------------")
-        print(''.join(squareString))
+    def __init__(self, cols):
+        self.sudoku3x3 = [cols[0], cols[1], cols[2], cols[3], cols[4], cols[5], cols[6], cols[7], cols[8]]
     
     
 
 
 class Sudoku9x9:
     def __init__(self):
-        allValues = np.matrix([[0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0],
-                     [0,0,0,0,0,0,0,0]])
-        
-        #self.sudoku9x9 = [Sudoku3x3(), Sudoku3x3(), Sudoku3x3()]
+        self.allValues = ([[1,0,0,0,0,0,0,0,0],
+                           [0,1,0,0,0,0,0,0,0],
+                           [0,0,1,0,0,0,0,0,0],
+                           [0,0,0,1,0,0,0,0,0],
+                           [0,0,0,0,1,0,0,0,0],
+                           [0,0,0,0,0,1,0,0,0],
+                           [0,0,0,0,0,0,1,0,0],
+                           [0,0,0,0,0,0,0,1,0],
+                           [0,0,0,0,0,0,0,0,1]])
+
+
+        #self.sudoku9x9 = [Sudoku3x3(), Sudoku3x3(), Sudoku3x3()
+
         
 
     def PrintGrid(self):
-        string3x3 = []
+        rowString = []
+        rowString.append(("-------------  -------------  -------------\n| "))
+        for y in range(9):
+            for x in range(9):
+                if (x + 1) % 3 == 0 and x != 8:
+                    rowString.append(str(self.allValues[y][x]) + " |  | ")
+                elif (x + 1) % 3 == 0:
+                    rowString.append(str(self.allValues[y][x]) + " |\n")
+                else:
+                    rowString.append(str(self.allValues[y][x]) + " | ") 
+
+            if (y + 1) % 3 == 0 and y != 8:
+                rowString.append("-------------  -------------  -------------\n-------------  -------------  -------------\n| ")  
+            else:
+                rowString.append("-------------  -------------  -------------\n| ")
+
+        print("".join(rowString))
+        '''
         for index in range(0, 3):
             self.sudoku9x9[index].PrintSquare()
-'''
-        for bigrow in sudokuSize:
-            for row in sudoku9x9:
-                for elem in row:
-                     
-                    print(elem, end=' | ')
-                    
-                if len(elem) % 3 == 0: 
-                    print("\n")    
-            print("----------------------------------")
-'''
+        '''
     #def getSudoku(self.sudoku9x9):
 
 
