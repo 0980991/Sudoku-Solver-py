@@ -1,26 +1,28 @@
 
 from pyautogui import *
-import pyautogui
-import time
-import keyboard
-import random
+import pyautogui, json, time, keyboard, random, os
 import numpy as np
+
 
 class MenUI:
     def __init__(self):
 
         
-
+        sudoku = Sudoku9x9()
         while(True):
             choice = input((25 * "-") + "\nWelcome to SUDOKU SOLVER 9000\n" + (25 * "-") + "\n\nWhat would you like to do today?\n" + (25 * "-") + "\n1. Load Sudoku\n2. Play Sudoku\n3. Solve Sudoku\n4. Get on with your day\n")
-            sudoku = Sudoku9x9()
+            
             if choice == "1":
+                sudoku.ClearTerminal()
                 sudoku.LoadSudoku()
             elif choice == "2":
+                sudoku.ClearTerminal()
                 sudoku.PlaySudoku()
             elif choice == "3":
+                sudoku.ClearTerminal()
                 sudoku.SolveSudoku()
             elif choice == "4":
+                sudoku.ClearTerminal()
                 quit() 
 
         
@@ -45,29 +47,29 @@ class Sudoku9x9:
                            [0,1,0,  0,5,0,  0,4,0],
                            [8,3,4,  1,9,0,  6,0,0]])
 
-        self.allValues = ([[1,0,0,  0,0,2,  4,0,9],
-                           [7,0,0,  0,0,4,  0,0,0],
-                           [0,4,0,  7,6,8,  0,0,0],
-                           
-                           [4,0,1,  0,2,9,  0,3,5],
-                           [3,0,0,  0,0,5,  0,0,7],
-                           [0,8,5,  3,0,0,  2,0,4],
-
-                           [0,0,0,  0,4,0,  0,0,3],
-                           [0,1,0,  0,5,0,  0,4,0],
-                           [8,3,4,  1,9,0,  6,0,0]])
+        self.allValues = None
+        
         
 
-
     def PlaySudoku(self):
-        while True:
-            
-            self.PrintGrid()
-            self.EnterValue()
+        if self.allValues != None:
+
+            while True:
+                self.PrintGrid()
+                self.EnterValue()
+        
+        print("Please load a sudoku from a JSON file\n\n")
+        self.EnterToContinue()
+        self.ClearTerminal()      
 
     def LoadSudoku(self):
-        pass
-    
+        name = input("please enter the filename:_____.json\n")
+        self.allValues = (json.load(open(name + ".json")))["values"]
+
+        print(name + " has been loaded successfully!\n\n")
+        self.EnterToContinue()
+        self.ClearTerminal()
+
     def SolveSudoku(self):  
         for row in range(9):
             for col in range(9):
@@ -82,8 +84,13 @@ class Sudoku9x9:
         self.PrintGrid()
         input("continue.....")
 
-
-
+    def ClearTerminal(self):
+        os.system("cls")
+    
+    def EnterToContinue(self):
+        self.ClearTerminal()
+        pE = "Press enter to continue..."
+         
     def PrintGrid(self):
         rowString = []
         rowString.append(("-------------  -------------  -------------\n| "))
@@ -106,6 +113,7 @@ class Sudoku9x9:
         print("".join(rowString))
 
     def EnterValue(self):
+        
         row, col, nr = input("Enter the row nr, col nr and number you want to add or type 'quit 0 0' to return to the menu: ").split()
 
         if row == "quit":
@@ -116,8 +124,10 @@ class Sudoku9x9:
 
         if self.IsPossible(row, col, nr):
             self.allValues[int(row)][int(col)] = int(nr)
-        else: 
-            print("No way josé")
+            self.ClearTerminal() 
+        else:
+            self.ClearTerminal() 
+            input("-------------------------------\n| This move is not possible! |\n-------------------------------\n")
 
     def IsPossible(self, row, col, nr):
         for n in range(9):
@@ -137,8 +147,9 @@ class Sudoku9x9:
                     return False
         return True
 
-                
 
+
+                
 
 MenUI()
 
