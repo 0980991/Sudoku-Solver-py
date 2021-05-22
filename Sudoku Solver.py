@@ -30,7 +30,9 @@ class Row:
     def __init__(self, cols):
         self.Row = [cols[0], cols[1], cols[2], cols[3], cols[4], cols[5], cols[6], cols[7], cols[8]]
     
-    
+class SudokuScan:
+    def __init__(self, filename):
+        pass
 
 
 class Sudoku9x9:
@@ -63,12 +65,26 @@ class Sudoku9x9:
         self.ClearTerminal()      
 
     def LoadSudoku(self):
-        name = input("please enter the filename:_____.json\n")
-        self.allValues = (json.load(open(name + ".json")))["values"]
+        choice = ""
+        while choice not in ["1", "2"]:
+            choice = input("Where would you like to load a sudoku from?\n" + (20*"-") + "\n1. Import a Json file\n2. Scan a jpg image\n")
+            
+            if choice == "1":
+                self.ClearTerminal()
+                name = input("please enter the name of the json file:_____.json\n")
+                self.allValues = (json.load(open(os.path.join(sys.path[0], name + ".json"))))["values"] #sys.path[0] indicates the local directory
+            elif choice == "2":
+                self.ClearTerminal
+                name = input("Please enter the name of the jpg file: ______.jpg\n")
+                self.ScanImage()
+            self.ClearTerminal()
 
         print(name + " has been loaded successfully!\n\n")
         self.EnterToContinue()
         self.ClearTerminal()
+    
+    def ScanImage(self):
+        pass
 
     def SolveSudoku(self):  
         for row in range(9):
