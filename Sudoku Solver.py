@@ -95,7 +95,6 @@ class Sudoku9x9:
                             self.allValues[row][col] = nr
                             self.SolveSudoku()
                             self.allValues[row][col] = 0
-                    
                     return
         self.PrintGrid()
         input("continue.....")
